@@ -1,0 +1,117 @@
+
+// ==================================
+// VN SMILE WEBSITE CONFIGURATION
+// ==================================
+
+// IMPORTANT: Replace this with the clinic's
+// real WhatsApp number, including country code.
+// Malaysia example: 60123456789
+const WHATSAPP_NUMBER = "60123456789";
+
+// Replace with the verified clinic address.
+const CLINIC_ADDRESS = "VN Smile Dental Clinic, Malaysia";
+
+
+// ==================================
+// MOBILE NAVIGATION
+// ==================================
+
+const menuToggle = document.getElementById("menuToggle");
+const navigation = document.getElementById("navigation");
+
+menuToggle.addEventListener("click", function () {
+    navigation.classList.toggle("open");
+
+    const isOpen = navigation.classList.contains("open");
+    menuToggle.setAttribute("aria-expanded", isOpen);
+    menuToggle.textContent = isOpen ? "✕" : "☰";
+});
+
+document.querySelectorAll("#navigation a").forEach(link => {
+    link.addEventListener("click", function () {
+        navigation.classList.remove("open");
+        menuToggle.textContent = "☰";
+        menuToggle.setAttribute("aria-expanded", "false");
+    });
+});
+
+
+// ==================================
+// GOOGLE MAPS
+// ==================================
+
+const mapLink = document.getElementById("mapLink");
+
+mapLink.href =
+    "https://www.google.com/maps/search/?api=1&query=" +
+    encodeURIComponent(CLINIC_ADDRESS);
+
+mapLink.target = "_blank";
+mapLink.rel = "noopener noreferrer";
+
+
+// ==================================
+// WHATSAPP FLOATING BUTTON
+// ==================================
+
+const whatsappFloat = document.getElementById("whatsappFloat");
+
+const generalMessage =
+    "Hello VN Smile, I would like to enquire about your dental services.";
+
+whatsappFloat.href =
+    "https://wa.me/" + WHATSAPP_NUMBER +
+    "?text=" + encodeURIComponent(generalMessage);
+
+whatsappFloat.target = "_blank";
+whatsappFloat.rel = "noopener noreferrer";
+
+
+// ==================================
+// CONTACT FORM
+// ==================================
+
+const contactForm = document.getElementById("contactForm");
+
+contactForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const service = document.getElementById("service").value;
+    const message = document.getElementById("message").value.trim();
+
+    if (!name || !phone || !service) {
+        alert("Please complete all required fields.");
+        return;
+    }
+
+    const whatsappMessage =
+        "Hello VN Smile!\n\n" +
+        "I would like to make an enquiry.\n\n" +
+        "Name: " + name + "\n" +
+        "Phone: " + phone + "\n" +
+        "Service: " + service + "\n" +
+        "Message: " + (message || "No additional message");
+
+    const whatsappURL =
+        "https://wa.me/" + WHATSAPP_NUMBER +
+        "?text=" + encodeURIComponent(whatsappMessage);
+
+    window.open(whatsappURL, "_blank");
+});
+
+
+// ==================================
+// AUTOMATIC COPYRIGHT YEAR
+// ==================================
+
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+
+// ==================================
+// WEBSITE LOADED
+// ==================================
+
+console.log("VN Smile website is ready!");
